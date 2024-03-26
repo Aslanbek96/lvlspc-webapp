@@ -3,25 +3,20 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [initialName, setInitialName] = useState("");
+  const [updatedName, setUpdatedName] = useState("");
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.ready();
-    if (tg.initData) {
-      setInitialName(tg.initDataUnsafe?.user?.first_name || "");
+    if (tg.initDataUnsafe?.user?.first_name) {
+      setInitialName(tg.initDataUnsafe.user.first_name);
     }
   }, [setInitialName]);
-  const handleClose = () => {
-    const tg = window.Telegram.WebApp;
-
-    tg.close();
-  };
-
-  console.log(initialName);
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-2 p-24">
@@ -32,11 +27,21 @@ export default function Home() {
         </div>
         <div className="space-y-1 w-full">
           <Label>Ваше новое имя</Label>
-          <Input className="w-full" />
+          <Input
+            onChange={(e) => setUpdatedName(e.target.value)}
+            className="w-full"
+          />
         </div>
-        <Button className="w-full" onClick={handleClose}>
+        <Button
+          className="w-full"
+          onClick={() => window.Telegram.WebApp.close()}
+        >
           Сохранить
         </Button>
+        <div className="flex gap-2">
+          <Link href="/admin">Admin</Link>
+          <Link href="/employee">Employee</Link>
+        </div>
       </div>
     </main>
   );
