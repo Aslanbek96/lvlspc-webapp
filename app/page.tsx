@@ -12,6 +12,10 @@ export default function Home() {
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
+    tg.MainButton.isVisible = true;
+    tg.MainButton.hide();
+    tg.MainButton.text = "Отправить данные";
+    tg.headerColor = "secondary_bg_color";
     tg.ready();
     if (tg.initDataUnsafe?.user?.first_name) {
       setInitialName(tg.initDataUnsafe.user.first_name);
