@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function CreateUserForm() {
   const [firstName, setFirstName] = useState("");
@@ -16,9 +16,32 @@ export default function CreateUserForm() {
 
   useEffect(() => {
     if (firstName && lastName) {
-      window.Telegram.WebApp.MainButton.hide();
-    } else {
       window.Telegram.WebApp.MainButton.show();
+    } else {
+      window.Telegram.WebApp.MainButton.hide();
+    }
+  }, [firstName, lastName]);
+
+  const onSendData = useCallback(() => {
+    const data = {
+      firstName,
+      lastName,
+    };
+    window.Telegram.WebApp.sendData(JSON.stringify(data));
+  }, [firstName, lastName]);
+
+  useEffect(() => {
+    window.Telegram.WebApp.onEvent("mainButtonClicked", onSendData);
+    return () => {
+      window.Telegram.WebApp.offEvent("mainButtonClicked", onSendData);
+    };
+  }, [onSendData]);
+
+  useEffect(() => {
+    if (firstName || lastName) {
+      window.Telegram.WebApp.enableClosingConfirmation();
+    } else {
+      window.Telegram.WebApp.disableClosingConfirmation();
     }
   }, [firstName, lastName]);
 
