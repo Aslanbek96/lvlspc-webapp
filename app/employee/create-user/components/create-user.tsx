@@ -7,10 +7,12 @@ import { useCallback, useEffect, useState } from "react";
 export default function CreateUserForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [queryId, setQueryId] = useState("");
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.MainButton.text = "Отправить данные";
+    setQueryId(tg.initDataUnsafe?.query_id || "");
     tg.ready();
   }, []);
 
@@ -63,6 +65,7 @@ export default function CreateUserForm() {
         <Label className="text-sm font-semibold">Фамилия</Label>
         <Input onChange={(e) => setLastName(e.target.value)} />
       </div>
+      {queryId}
     </div>
   );
 }
