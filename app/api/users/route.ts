@@ -1,7 +1,7 @@
 import { Bot } from "grammy";
 import { NextRequest, NextResponse } from "next/server";
 
-const bot = new Bot(process.env.BOT_TOKEN!);
+const bot = new Bot("7006253241:AAG10Qr6yTpnJM0_4FtXXGqs0fWj6FBoTjk");
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
