@@ -26,8 +26,15 @@ export default function CreateUserForm() {
     const data = {
       firstName,
       lastName,
+      queryId: window.Telegram.WebApp.initDataUnsafe?.query_id,
     };
-    window.Telegram.WebApp.sendData(JSON.stringify(data));
+    fetch("https://lvlspc-webapp.vercel.app/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
   }, [firstName, lastName]);
 
   useEffect(() => {
