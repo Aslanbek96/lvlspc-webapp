@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ message: firstName });
   } catch (error) {
     await bot.api.answerWebAppQuery(queryId, {
       id: queryId,
