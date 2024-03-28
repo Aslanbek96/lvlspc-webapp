@@ -8,8 +8,8 @@ export async function POST(request: NextRequest) {
   const { firstName, lastName, queryId } = body;
   try {
     await bot.api.answerWebAppQuery(queryId, {
-      id: queryId,
       type: "article",
+      id: queryId,
       title: "Successfull",
       input_message_content: {
         message_text: `Hello, ${firstName} ${lastName}`,
@@ -19,8 +19,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, data: { firstName, lastName } });
   } catch (error) {
     await bot.api.answerWebAppQuery(queryId, {
-      id: queryId,
       type: "article",
+      id: queryId,
       title: "Unsuccessfull",
       input_message_content: {
         message_text: `Hello, ${firstName} ${lastName}`,

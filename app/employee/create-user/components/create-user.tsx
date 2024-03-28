@@ -30,7 +30,7 @@ export default function CreateUserForm() {
       lastName,
       queryId: window.Telegram.WebApp.initDataUnsafe?.query_id,
     };
-    fetch("https://lvlspc-webapp.vercel.app/api/users", {
+    fetch("https://lvlspc.dev/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
