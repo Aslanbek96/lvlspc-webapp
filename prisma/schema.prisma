@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  telegramId BigInt      @unique
+  senetLogin String?     @unique
+  password   String?
+  zenLogin   String?
+  firstName  String?
+  lastName   String?
+  phone      String?
+  image      String?
+  idNumber   String?
+  startDate  DateTime?
+  location   String?
+  payRate    String?
+  birthDate  DateTime?
+  role       Roles?
+  status     Status?
+  shifts     UserShift[]
+}
+
+model Shift {
+  id        String      @id @default(uuid())
+  startTime DateTime
+  endTime   DateTime?
+  location  String
+  type      ShiftType
+  users     UserShift[]
+}
+
+model UserShift {
+  userId  String
+  shiftId String
+  Users   User   @relation(fields: [userId], references: [id])
+  Shifts  Shift  @relation(fields: [shiftId], references: [id])
+
+  @@id([userId, shiftId])
+}
+
+enum Roles {
+  ADMIN
+  DIRECTOR
+  FINANCE
+  IT
+  CASHIER
+  OPERATOR
+  CLEANER
+  CUSTOMER
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  PENDING
+}
+
+enum ShiftType {
+  DAY
+  NIGHT
+}
