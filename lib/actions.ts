@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { createUserSchema } from "./zod-schemas";
+import prisma from "@/prisma/client";
 
 export const createUser = async (
   values: z.infer<typeof createUserSchema>,
