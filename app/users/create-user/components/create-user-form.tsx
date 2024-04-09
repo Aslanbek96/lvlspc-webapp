@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { createUser } from "@/lib/actions";
 
 export default function CreateUserForm() {
-  const [telegramId, setTelegramId] = useState(0);
+  const [telegramId, setTelegramId] = useState(1);
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
