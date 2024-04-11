@@ -28,9 +28,8 @@ export default function CreateUserForm() {
     tg.MainButton.text = "Отправить данные";
     tg.headerColor = "secondary_bg_color";
     tg.ready();
-    if (tg.initDataUnsafe?.user?.id) {
-      setTelegramId(tg.initDataUnsafe.user.id);
-    }
+    setTelegramId(tg.initDataUnsafe?.user?.id || 0);
+    tg.ready();
   }, [setTelegramId]);
 
   const form = useForm<z.infer<typeof createUserSchema>>({
@@ -50,7 +49,7 @@ export default function CreateUserForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-[400px]"
+        className="space-y-8 w-[200px]"
       >
         {telegramId}
         <FormField
