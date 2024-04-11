@@ -3,7 +3,7 @@
 import { createUserSchema } from "@/lib/zod-schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { set, z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +20,8 @@ import { createUser } from "@/lib/actions";
 
 export default function CreateUserForm() {
   const [telegramId, setTelegramId] = useState(1);
+  const [queryId, setQueryId] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
@@ -30,6 +32,8 @@ export default function CreateUserForm() {
     tg.ready();
     setTelegramId(tg.initDataUnsafe?.user?.id || 0);
     tg.ready();
+    setQueryId(tg.initDataUnsafe?.query_id || "");
+    setUsername(tg.initDataUnsafe?.user?.username || "");
   }, [setTelegramId]);
 
   const form = useForm<z.infer<typeof createUserSchema>>({
@@ -52,6 +56,8 @@ export default function CreateUserForm() {
         className="space-y-8 w-[200px]"
       >
         {telegramId}
+        {queryId}
+        {username}
         <FormField
           control={form.control}
           name="firstName"
