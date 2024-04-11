@@ -30,7 +30,6 @@ export default function CreateUserForm() {
     tg.MainButton.text = "Отправить данные";
     tg.headerColor = "secondary_bg_color";
     setTelegramId(tg.initDataUnsafe?.user?.id || 0);
-    tg.ready();
     setQueryId(tg.initDataUnsafe?.query_id || "");
     setUsername(tg.initDataUnsafe?.user?.username || "");
     tg.ready();
