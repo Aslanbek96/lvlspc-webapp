@@ -68,8 +68,8 @@ export default function CreateUserForm() {
         <Label className="text-sm font-semibold">Фамилия</Label>
         <Input onChange={(e) => setLastName(e.target.value)} />
       </div>
-      {queryId}
-      {telegramId}
+      <div>{queryId}</div>
+      <div>{telegramId}</div>
     </div>
   );
 }
