@@ -3,16 +3,19 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCallback, useEffect, useState } from "react";
+import { set } from "zod";
 
 export default function CreateUserForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [queryId, setQueryId] = useState("");
+  const [telegramId, setTelegramId] = useState(1);
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.MainButton.text = "Отправить данные";
     setQueryId(tg.initDataUnsafe?.query_id || "");
+    setTelegramId(tg.initDataUnsafe?.user?.id || 0);
     tg.ready();
   }, []);
 
@@ -66,6 +69,7 @@ export default function CreateUserForm() {
         <Input onChange={(e) => setLastName(e.target.value)} />
       </div>
       {queryId}
+      {telegramId}
     </div>
   );
 }
