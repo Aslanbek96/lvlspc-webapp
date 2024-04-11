@@ -24,7 +24,7 @@ export default function CreateUserForm() {
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.MainButton.isVisible = true;
-    tg.MainButton.hide();
+    tg.MainButton.show();
     tg.MainButton.text = "Отправить данные";
     tg.headerColor = "secondary_bg_color";
     tg.ready();
