@@ -29,11 +29,11 @@ export default function CreateUserForm() {
     tg.MainButton.show();
     tg.MainButton.text = "Отправить данные";
     tg.headerColor = "secondary_bg_color";
-    tg.ready();
     setTelegramId(tg.initDataUnsafe?.user?.id || 0);
     tg.ready();
     setQueryId(tg.initDataUnsafe?.query_id || "");
     setUsername(tg.initDataUnsafe?.user?.username || "");
+    tg.ready();
   }, [setTelegramId]);
 
   const form = useForm<z.infer<typeof createUserSchema>>({
