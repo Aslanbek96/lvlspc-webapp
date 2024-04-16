@@ -23,7 +23,7 @@ model User {
   payRate    String?
   birthDate  DateTime?
   role       Roles?
-  status     Status?
+  status     Status?     @default(PENDING)
   shifts     UserShift[]
 }
 
@@ -45,6 +45,39 @@ model UserShift {
   @@id([userId, shiftId])
 }
 
+model Supplier {
+  id            String      @id @default(uuid())
+  name          String
+  contactPerson String
+  phone         String
+  discount      String
+  Commodities   Commodity[]
+  Orders        Order[]
+}
+
+model Commodity {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  supplierId  String
+  supplier    Supplier @relation(fields: [supplierId], references: [id])
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  isDelivered  Boolean
+  orderDate    DateTime?
+  invoice      String?
+  receipt      String?
+  paymentDate  DateTime?
+  deliveryDate DateTime?
+  status       OrderStatus @default(INITIALIZED)
+  amount       Float
+  location     String
+  supplierId   String
+  supplier     Supplier    @relation(fields: [supplierId], references: [id])
+}
+
 enum Roles {
   ADMIN
   DIRECTOR
@@ -60,9 +93,18 @@ enum Status {
   ACTIVE
   INACTIVE
   PENDING
+  DECLINED
 }
 
 enum ShiftType {
   DAY
   NIGHT
+}
+
+enum OrderStatus {
+  INITIALIZED //Order is created but waiting for invoice
+  PENDING //Expecting payment
+  PAID //Payment is done
+  DELIVERED //Order is delivered and uploaded
+  CANCELLED //Order is cancelled
 }

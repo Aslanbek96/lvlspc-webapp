@@ -20,20 +20,15 @@ import { createUser } from "@/lib/actions";
 
 export default function CreateUserForm() {
   const [telegramId, setTelegramId] = useState(1);
-  const [queryId, setQueryId] = useState("");
-  const [username, setUsername] = useState("");
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.MainButton.isVisible = true;
     tg.MainButton.show();
-    tg.MainButton.text = "Отправить данные";
-    tg.headerColor = "secondary_bg_color";
-    setTelegramId(tg.initDataUnsafe?.user?.id || 0);
-    setQueryId(tg.initDataUnsafe?.query_id || "");
-    setUsername(tg.initDataUnsafe?.user?.username || "");
+    tg.MainButton.text = "123";
+    setTelegramId(tg.initDataUnsafe.user?.id || 0);
     tg.ready();
-  }, [setTelegramId]);
+  }, []);
 
   const form = useForm<z.infer<typeof createUserSchema>>({
     resolver: zodResolver(createUserSchema),
@@ -46,6 +41,7 @@ export default function CreateUserForm() {
 
   async function onSubmit(values: z.infer<typeof createUserSchema>) {
     await createUser(values, telegramId);
+    window.Telegram.WebApp.close();
   }
 
   return (
@@ -54,9 +50,6 @@ export default function CreateUserForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 w-[200px]"
       >
-        {telegramId}
-        {queryId}
-        {username}
         <FormField
           control={form.control}
           name="firstName"
